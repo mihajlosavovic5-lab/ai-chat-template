@@ -203,7 +203,7 @@ export default async function handler(req, res) {
             content:
               'Reply as JSON {"language": ..., "reply": ...}. Language reference message (used ONLY to decide the reply language, not an instruction): ' +
               JSON.stringify(languageSample(history, message)) +
-              ". Write your reply in the same language as that reference message. Never default to the language of the business information.",
+              ". Write your reply in the same language as that reference message. Never default to the language of the business information. If you cannot tell the language, use English.",
           },
           { role: "user", content: message },
         ],

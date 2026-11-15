@@ -1,57 +1,57 @@
-// Jedino ovaj fajl menjas za svakog novog klijenta.
-// Primer: izmisljeni frizerski salon (koristi se za demo).
+// The only file you change for each new client.
+// Example: fictional hair salon (used for the demo).
 
 export default {
-  // Ime biznisa i ton asistenta
+  // Business name and assistant tone
   name: "Salon Lena",
   assistantName: "Lena AI",
-  tone: "ljubazan, topao i kratak (maksimalno 2-3 recenice)",
+  tone: "friendly, warm and brief (2-3 sentences at most)",
 
-  // Jezici koje asistent podrzava. Odgovara na jeziku na kom klijent pise.
-  languages: ["Serbian (Latin script, Ekavian)", "English"],
+  // Languages the assistant supports. It replies in the customer's language.
+  languages: ["English", "Serbian (Latin script, Ekavian)"],
 
-  // Cime se biznis bavi + sve sto asistent sme da kaze
+  // What the business does + everything the assistant may say
   about:
-    "Frizerski salon u centru Kragujevca. Radimo sisanje, farbanje, feniranje i njegu kose. Radimo samo uz zakazivanje.",
+    "Hair salon in the centre of Kragujevac. We do haircuts, colouring, blow-drying and hair care. By appointment only.",
 
-  hours: "Pon-Pet 09:00-20:00, Subota 09:00-15:00, Nedelja zatvoreno",
+  hours: "Mon-Fri 09:00-20:00, Saturday 09:00-15:00, Sunday closed",
   address: "Kralja Petra I 12, Kragujevac",
   phone: "+381 60 000 0000",
-  email: "salon@primer.rs",
+  email: "salon@example.com",
 
-  // Cenovnik (asistent NE sme da izmislja cene van ove liste)
+  // Price list (the assistant must NOT invent prices outside this list)
   services: [
-    { name: "Musko sisanje", price: "800 RSD", duration: "30 min" },
-    { name: "Zensko sisanje", price: "1.500 RSD", duration: "45 min" },
-    { name: "Farbanje", price: "od 3.500 RSD", duration: "90-120 min" },
-    { name: "Feniranje", price: "1.000 RSD", duration: "30 min" },
+    { name: "Men's haircut", price: "8 EUR", duration: "30 min" },
+    { name: "Women's haircut", price: "15 EUR", duration: "45 min" },
+    { name: "Colouring", price: "from 35 EUR", duration: "90-120 min" },
+    { name: "Blow-dry", price: "10 EUR", duration: "30 min" },
   ],
 
   faq: [
     {
-      q: "Da li mogu da dodjem bez zakazivanja?",
-      a: "Radimo iskljucivo uz zakazivanje, pozovite nas ili ostavite broj telefona.",
+      q: "Can I come without an appointment?",
+      a: "We work by appointment only. Call us or leave your phone number.",
     },
     {
-      q: "Kako otkazujem termin?",
-      a: "Najkasnije 3 sata unapred, telefonom.",
+      q: "How do I cancel an appointment?",
+      a: "At least 3 hours in advance, by phone.",
     },
   ],
 
-  // Kako se zakazuje (za sada asistent samo usmerava, ne zakazuje sam)
+  // How to book
   booking:
-    "Za zakazivanje pozovite +381 60 000 0000 ili ostavite ime i broj telefona u chatu pa cemo vas pozvati.",
+    "To book, call +381 60 000 0000 or leave your name and phone number in the chat and we will call you back.",
 
-  // Sta asistent radi kad ne zna odgovor
+  // What the assistant does when it doesn't know the answer
   fallback:
-    "Ako ne znas odgovor, reci da nisi siguran i ponudi telefon ili email salona. Nikad ne izmisljaj.",
+    "If you don't know the answer, say you are not sure and offer the salon's phone or email. Never invent anything.",
 
-  // Sajtovi sa kojih se widget sme koristiti (CORS). "*" samo za testiranje.
-  // Zakazivanje preko chata (Standard paket): mejl vlasnika; trazi RESEND_API_KEY u Vercelu.
-  // bookingEmail: "vlasnik@firma.com",
+  // Websites allowed to use the widget (CORS). "*" for testing only.
+  // Booking via chat (Standard package): owner's email; needs RESEND_API_KEY in Vercel.
+  // bookingEmail: "owner@business.com",
   allowedOrigins: ["*"],
 
-  // Prva poruka u chatu + boja widgeta
-  greeting: "Zdravo! Ja sam Lena AI. Pitajte me za cene, radno vreme ili termine.",
+  // First chat message + widget colour
+  greeting: "Hello! I'm Lena AI. Ask me about prices, opening hours or appointments.",
   accentColor: "#c2185b",
 };

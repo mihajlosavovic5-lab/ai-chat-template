@@ -1,53 +1,52 @@
-// DEMO: izmisljena advokatska kancelarija (nijedna stvarna osoba, firma ni broj).
-// Primer configa za pravnu delatnost: asistent NE daje pravne savete.
-
+// DEMO (English): fictional law office. No real person, firm or number.
+// The assistant gives NO legal advice.
 export default {
-  name: "Advokatska kancelarija Pravda Plus",
-  assistantName: "Asistent kancelarije Pravda Plus",
-  tone: "ljubazan, uljudan i profesionalan, bez pravnih saveta (maksimalno 2-3 rečenice)",
+  name: "Justice Plus Law Office",
+  assistantName: "Justice Plus Law Office Assistant",
+  tone: "friendly, polite and professional, no legal advice",
 
-  languages: ["Serbian (Latin script, Ekavian)", "English"],
+  languages: ["English", "Serbian (Latin script, Ekavian)"],
 
   about:
-    "Izmišljena advokatska kancelarija za demo, sa sedištem u izmišljenom gradu. Bavi se porodičnim pravom, nepokretnostima, ugovorima, radnim pravom i parnicama. Asistent NE daje pravne savete, mišljenja o konkretnim slučajevima niti procenu izgleda na sudu; za to je potreban pregled slučaja kod advokata na konsultaciji.",
+    "Fictional law office for a demo, based in a fictional city. It handles family law, real estate, contracts, employment law and litigation. The assistant gives NO legal advice, opinions on specific cases or assessments of chances in court; that requires a case review by a lawyer at a consultation.",
 
-  hours: "Ponedeljak-petak 09:00-17:00, vikendom zatvoreno. Konsultacije samo uz zakazivanje.",
-  address: "Ulica Primera 1, Demo grad, Srbija",
+  hours: "Monday-Friday 09:00-17:00, closed on weekends. Consultations by appointment only.",
+  address: "1 Example Street, Demo City",
   phone: "060 000 0001",
-  email: "kancelarija@pravdaplus.example",
+  email: "office@justiceplus.example",
 
   services: [
-    { name: "Prva konsultacija (procena slučaja)", price: "3.000 RSD (30 min)" },
-    { name: "Porodično pravo (razvod, starateljstvo, izdržavanje)", price: "od 40.000 RSD, zavisi od složenosti" },
-    { name: "Nepokretnosti (kupoprodaja, provera dokumentacije, ugovori)", price: "od 25.000 RSD" },
-    { name: "Izrada i pregled ugovora", price: "od 10.000 RSD" },
-    { name: "Radno pravo (otkazi, ugovori o radu, naknade)", price: "od 20.000 RSD" },
-    { name: "Zastupanje u parnici", price: "po dogovoru, nakon konsultacije" },
+    { name: "First consultation (case assessment)", price: "30 EUR (30 min)" },
+    { name: "Family law (divorce, custody, child support)", price: "from 350 EUR, depends on complexity" },
+    { name: "Real estate (purchase, document checks, contracts)", price: "from 200 EUR" },
+    { name: "Contract drafting and review", price: "from 80 EUR" },
+    { name: "Employment law (dismissals, contracts, compensation)", price: "from 170 EUR" },
+    { name: "Representation in litigation", price: "by agreement, after a consultation" },
   ],
 
   faq: [
     {
-      q: "Kako zakazujem konsultaciju?",
-      a: "Pozivom na 060 000 0001 ili mejlom na kancelarija@pravdaplus.example. Konsultacije traju 30 minuta i koštaju 3.000 RSD.",
+      q: "How do I book a consultation?",
+      a: "Call 060 000 0001 or email office@justiceplus.example. Consultations last 30 minutes and cost 30 EUR.",
     },
     {
-      q: "Šta da ponesem na konsultaciju?",
-      a: "Svu dokumentaciju vezanu za slučaj (ugovore, rešenja, prepisku), kao i ličnu kartu.",
+      q: "What should I bring to the consultation?",
+      a: "All documents related to your case (contracts, decisions, correspondence) and an ID card.",
     },
     {
-      q: "Da li je prva konsultacija poverljiva?",
-      a: "Da, sve što podelite na konsultaciji je obuhvaćeno advokatskom tajnom. U chatu nemojte slati lične podatke ni detalje slučaja.",
+      q: "Is the first consultation confidential?",
+      a: "Yes, everything you share at the consultation is covered by attorney-client privilege. Please do not share personal data or case details in the chat.",
     },
   ],
 
   booking:
-    "Konsultacija se zakazuje pozivom na 060 000 0001 ili mejlom na kancelarija@pravdaplus.example.",
+    "Book a consultation by calling 060 000 0001 or emailing office@justiceplus.example.",
 
   fallback:
-    "Ako pitanje traži pravni savet ili procenu konkretnog slučaja, reci da to može samo advokat na konsultaciji i ponudi zakazivanje. Zamoli korisnika da u chatu ne deli lične podatke ni detalje slučaja. Nikad ne izmišljaj cene, rokove ni ishod.",
+    "If a question asks for legal advice or an assessment of a specific case, say that only a lawyer can do that at a consultation and offer to arrange one. Ask the user not to share personal data or case details in the chat. Never invent prices, deadlines or outcomes.",
 
   allowedOrigins: ["*"],
   greeting:
-    "Dobar dan! Ja sam asistent kancelarije Pravda Plus. Mogu da vam kažem više o oblastima rada, cenama i zakazivanju konsultacije.",
+    "Hello! I'm the Justice Plus Law Office assistant. Ask me about practice areas, prices or booking a consultation.",
   accentColor: "#1f3a5f",
 };

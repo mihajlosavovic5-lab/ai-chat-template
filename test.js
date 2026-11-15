@@ -38,7 +38,7 @@ assert.equal((await call({ method: "POST", body: { message: "a".repeat(501) } })
 const ok = await call({ method: "POST", body: { message: "Koliko kosta musko sisanje?" } });
 assert.equal(ok.status, 200);
 assert.equal(ok.body.reply, "Ok!");
-assert.match(lastBody.messages[0].content, /Musko sisanje: 800 RSD/);
+assert.match(lastBody.messages[0].content, /Men's haircut: 8 EUR/);
 
 // 4b. pravilo: jezik asistenta nije jezik osoblja (sprecava izmisljanje)
 assert.match(lastBody.messages[0].content, /describe only YOU/);
@@ -91,10 +91,10 @@ assert.match(lastBody.messages[0].content, /Salon Lena/, "bez ENABLE_DEMOS uvek 
 // 8. sa ENABLE_DEMOS=1 bira se trazeni demo, nepoznat klijent pada na default
 process.env.ENABLE_DEMOS = "1";
 await call({ method: "POST", headers: { "x-forwarded-for": "4.4.4.4" }, body: { message: "x", client: "advokat" } });
-assert.match(lastBody.messages[0].content, /Pravda Plus/);
+assert.match(lastBody.messages[0].content, /Justice Plus/);
 assert.doesNotMatch(lastBody.messages[0].content, /Salon Lena/);
 await call({ method: "POST", headers: { "x-forwarded-for": "5.5.5.5" }, body: { message: "x", client: "ordinacija" } });
-assert.match(lastBody.messages[0].content, /Studio Zdrava Leđa/);
+assert.match(lastBody.messages[0].content, /Healthy Back Studio/);
 await call({ method: "POST", headers: { "x-forwarded-for": "6.6.6.6" }, body: { message: "x", client: "__proto__" } });
 assert.match(lastBody.messages[0].content, /Salon Lena/, "nepoznat client -> default");
 await call({ method: "POST", headers: { "x-forwarded-for": "7.7.7.7" }, body: { message: "x", client: "toString" } });
