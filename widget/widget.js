@@ -36,25 +36,28 @@
     ".aic-chip{border:1px solid " + color + ";background:#fff;color:" + color + ";border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;transition:background .2s,color .2s,transform .2s;animation:aic-chip .35s ease both}" +
     ".aic-chip:hover{background:" + color + ";color:#fff;transform:translateY(-1px)}" +
     "@keyframes aic-chip{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}" +
-    ".aic-ov{display:none;position:fixed;inset:0;background:rgba(15,23,42,.4);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:99997}" +
+    ".aic-ov{display:none;position:fixed;inset:0;background:rgba(15,23,42,.4);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);opacity:0;pointer-events:none;transition:opacity .3s ease;z-index:99997}" +
     ".aic-ov.open{opacity:1;pointer-events:auto}" +
     "@media (max-width:600px){" +
       ".aic-ov{display:block}" +
       ".aic-box{left:10px;right:10px;width:auto;max-width:none;top:calc(var(--aic-top,0px) + var(--aic-vh,100dvh) / 2);bottom:auto;height:min(500px,calc(var(--aic-vh,100dvh) - 20px));max-height:none;border-radius:18px;transform:translateY(-50%)}" +
-      ".aic-box.open{animation:aic-pop-m .25s ease-out}" +
-      "@keyframes aic-pop-m{from{opacity:0;transform:translateY(-46%) scale(.97)}to{opacity:1;transform:translateY(-50%)}}" +
+      ".aic-box.open{animation:aic-pop-m .34s cubic-bezier(.2,.8,.2,1) both}" +
+      ".aic-box.closing{animation:aic-out-m .2s ease-in forwards}" +
+      "@keyframes aic-pop-m{from{opacity:0;transform:translateY(calc(-50% + 28px)) scale(.96)}to{opacity:1;transform:translateY(-50%) scale(1)}}" +
+      "@keyframes aic-out-m{from{opacity:1;transform:translateY(-50%) scale(1)}to{opacity:0;transform:translateY(calc(-50% + 20px)) scale(.97)}}" +
       ".aic-in{font-size:16px}" +
       ".aic-x{font-size:30px;line-height:1;padding:0 6px}" +
       "html.aic-open{overflow:hidden}" +
       "html.aic-open .aic-btn{display:none}" +
     "}" +
-    ".aic-box.open{animation:aic-pop .22s ease-out}" +
+    "@media (min-width:601px){.aic-box.open{animation:aic-pop .22s ease-out}.aic-box.closing{animation:aic-out .18s ease-in forwards}}" +
+    "@keyframes aic-out{to{opacity:0;transform:translateY(8px) scale(.98)}}" +
     "@keyframes aic-pop{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}" +
     ".aic-dots{display:inline-flex;align-items:center;gap:5px;height:18px}" +
     ".aic-dots i{width:7px;height:7px;border-radius:50%;background:#9ca3af;animation:aic-b 1.2s infinite ease-in-out}" +
     ".aic-dots i:nth-child(2){animation-delay:.15s}.aic-dots i:nth-child(3){animation-delay:.3s}" +
     "@keyframes aic-b{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}" +
-    "@media (prefers-reduced-motion:reduce){.aic-box.open,.aic-btn.aic-hop,.aic-dots i,.aic-chip{animation:none}}" +
+    "@media (prefers-reduced-motion:reduce){.aic-box.open,.aic-box.closing,.aic-btn.aic-hop,.aic-dots i,.aic-chip{animation:none}}" +
     ".aic-m.bot{background:#fff;color:#111;align-self:flex-start;border:1px solid #e5e7eb}" +
     ".aic-m.user{background:" + color + ";color:#fff;align-self:flex-end}" +
     ".aic-form{display:flex;gap:6px;padding:10px;border-top:1px solid #e5e7eb;background:#fff}" +
@@ -168,13 +171,21 @@
   }
   window.addEventListener("resize", fit);
 
+  var closeTimer = null;
   function setOpen(v) {
-    box.classList.toggle("open", v);
+    clearTimeout(closeTimer);
     ov.classList.toggle("open", v);
     document.documentElement.classList.toggle("aic-open", v && isMobile());
     if (v) {
+      box.classList.remove("closing");
+      box.classList.add("open");
       fit();
       if (!isMobile()) input.focus(); // na telefonu ne otvaramo tastaturu sami
+    } else if (box.classList.contains("open")) {
+      box.classList.add("closing"); // glatko zatvaranje, pa sakrivanje
+      closeTimer = setTimeout(function () {
+        box.classList.remove("open", "closing");
+      }, 200);
     }
   }
 
