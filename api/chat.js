@@ -99,8 +99,7 @@ const sentBookings = new Map(); // zaštita od duplikata (in-memory)
 async function sendBookingEmail(cfg, bk) {
   const text =
     `New booking request via chat (${cfg.name})\n\n` +
-    `Name: ${bk.name}\nPhone: ${bk.phone}\nService: ${bk.service}\nPreferred time: ${bk.time}\n\n` +
-    `Please contact the customer to confirm the slot.`;
+    `Name: ${bk.name}\nPhone: ${bk.phone}\nService: ${bk.service}\nPreferred time: ${bk.time}`;
   const r = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
