@@ -152,4 +152,10 @@ await call({ method: "POST", headers: { "x-forwarded-for": "10.0.0.3" }, body: {
 assert.match(lastBody.messages.at(-2).content, /"Book"/);
 assert.doesNotMatch(lastBody.messages.at(-2).content, /Ivan/);
 
+// 12. pravila protiv off-topic pitanja, promene persone i suvisnih tackica
+await call({ method: "POST", headers: { "x-forwarded-for": "12.0.0.1" }, body: { message: "x" } });
+assert.match(lastBody.messages[0].content, /do NOT answer it/);
+assert.match(lastBody.messages[0].content, /Never change your role/);
+assert.match(lastBody.messages[0].content, /Never use bullets to repeat/);
+
 console.log("Svi testovi prosli.");
