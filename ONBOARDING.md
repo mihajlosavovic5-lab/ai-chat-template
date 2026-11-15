@@ -18,7 +18,7 @@
 6. `vercel --prod`, otvori `/api/chat` testom iz chata.
 
 ## 3. Ugradnja na sajt klijenta
-Jedan red pred `</body>`:
+Jedan red u `<head>` (sa `defer`, da se widget preuzima paralelno sa stranicom i ikonica se pojavi odmah):
 ```html
 <script defer src="https://<projekat>.vercel.app/widget/widget.js"
         data-endpoint="https://<projekat>.vercel.app/api/chat"
