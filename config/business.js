@@ -47,6 +47,8 @@ export default {
     "Ako ne znas odgovor, reci da nisi siguran i ponudi telefon ili email salona. Nikad ne izmisljaj.",
 
   // Sajtovi sa kojih se widget sme koristiti (CORS). "*" samo za testiranje.
+  // Zakazivanje preko chata (Standard paket): mejl vlasnika; trazi RESEND_API_KEY u Vercelu.
+  // bookingEmail: "vlasnik@firma.com",
   allowedOrigins: ["*"],
 
   // Prva poruka u chatu + boja widgeta

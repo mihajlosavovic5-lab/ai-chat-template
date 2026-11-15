@@ -55,3 +55,9 @@ bira izmisljenu konfiguraciju iz `config/demos.js`. Na deployu pravog klijenta N
 tada uvek vazi samo `config/business.js`.
 
 Demo stranice: `/demo/index.html` (salon), `/demo/ordinacija.html`, `/demo/advokat.html`.
+
+## Zahtev za termin preko chata (opciono)
+
+1. U `config/business.js` otkomentarisi `bookingEmail` (mejl vlasnika).
+2. U Vercelu dodaj `RESEND_API_KEY` (resend.com) i, kad imas domen, `BOOKING_FROM`.
+3. Bot prikuplja ime, telefon, uslugu i termin, pa vlasniku stize mejl. Termin potvrdjuje vlasnik.

@@ -101,4 +101,32 @@ await call({ method: "POST", headers: { "x-forwarded-for": "7.7.7.7" }, body: { 
 assert.match(lastBody.messages[0].content, /Salon Lena/, "naziv iz prototipa -> default");
 delete process.env.ENABLE_DEMOS;
 
+// 9. zahtev za termin: salje mejl samo kad su bookingEmail i RESEND_API_KEY podeseni
+const { default: biz } = await import("./config/business.js");
+let emailBody = null;
+const bk = { name: "Ana", phone: "060 111 2222", service: "Sisanje", time: "petak 15h" };
+globalThis.fetch = async (url, opts) => {
+  if (String(url).includes("resend.com")) { emailBody = JSON.parse(opts.body); return { ok: true, json: async () => ({}) }; }
+  lastBody = JSON.parse(opts.body);
+  return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ language: "Serbian", reply: "Poslato.", booking: bk }) } }] }) };
+};
+// 9a. bez konfiguracije: nema mejla i nema pravila u promptu
+await call({ method: "POST", headers: { "x-forwarded-for": "9.9.9.1" }, body: { message: "hocu termin" } });
+assert.equal(emailBody, null);
+assert.doesNotMatch(lastBody.messages[0].content, /BOOKING REQUESTS/);
+// 9b. sa konfiguracijom: mejl ide vlasniku, polja ociscena
+biz.bookingEmail = "vlasnik@example.com";
+process.env.RESEND_API_KEY = "re_test";
+const r9 = await call({ method: "POST", headers: { "x-forwarded-for": "9.9.9.2" }, body: { message: "hocu termin" } });
+assert.match(lastBody.messages[0].content, /BOOKING REQUESTS/);
+assert.deepEqual(emailBody.to, ["vlasnik@example.com"]);
+assert.match(emailBody.text, /Ana/);
+assert.equal(r9.body.reply, "Poslato.");
+// 9c. nepotpun booking (fali telefon): nema mejla
+emailBody = null;
+bk.phone = "";
+await call({ method: "POST", headers: { "x-forwarded-for": "9.9.9.3" }, body: { message: "hocu termin" } });
+assert.equal(emailBody, null);
+delete biz.bookingEmail; delete process.env.RESEND_API_KEY;
+
 console.log("Svi testovi prosli.");
