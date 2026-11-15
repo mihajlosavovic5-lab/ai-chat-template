@@ -162,4 +162,7 @@ assert.match(lastBody.messages[0].content, /Never use bullets to repeat/);
 assert.match(lastBody.messages[0].content, /you chat in English and Spanish/);
 assert.match(lastBody.messages[0].content, /WRONG:/);
 
+// 14. pitanja o placanju/popustu nisu off-topic
+assert.match(lastBody.messages[0].content, /payment methods, discounts/);
+
 console.log("Svi testovi prosli.");
