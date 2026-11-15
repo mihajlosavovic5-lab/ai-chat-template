@@ -147,4 +147,9 @@ assert.doesNotMatch(rem, /"Mihajlo"/);
 await call({ method: "POST", headers: { "x-forwarded-for": "10.0.0.2" }, body: { message: "Mihajlo", history: [] } });
 assert.match(lastBody.messages.at(-2).content, /"Mihajlo"/);
 
+// 11. ime i prezime (2 reci) ne menja jezik; prva poruka je rezerva
+await call({ method: "POST", headers: { "x-forwarded-for": "10.0.0.3" }, body: { message: "Ivan Jovanovic", history: [{ role: "user", content: "Book" }, { role: "assistant", content: "Name?" }] } });
+assert.match(lastBody.messages.at(-2).content, /"Book"/);
+assert.doesNotMatch(lastBody.messages.at(-2).content, /Ivan/);
+
 console.log("Svi testovi prosli.");

@@ -119,14 +119,15 @@ async function sendBookingEmail(cfg, bk) {
   return r.ok;
 }
 
-// Poruka koja odredjuje jezik odgovora: najnovija korisnikova poruka sa bar 2 reci
-// (ime, broj ili "ok" nemaju jasan jezik). Ako je nema, koristi se poslednja poruka.
+// Poruka koja odredjuje jezik odgovora: najnovija korisnikova poruka sa bar 3 reci
+// (ime i prezime, broj, usluga ili "ok" nemaju pouzdan jezik). Ako je nema, prva
+// korisnikova poruka u razgovoru, a za prvu poruku ona sama.
 function languageSample(history, message) {
   const msgs = [...history.filter((m) => m.role === "user").map((m) => m.content), message];
   for (let i = msgs.length - 1; i >= 0; i--) {
-    if (msgs[i].trim().split(/\s+/).length >= 2) return msgs[i].slice(0, 200);
+    if (msgs[i].trim().split(/\s+/).length >= 3) return msgs[i].slice(0, 200);
   }
-  return message.slice(0, 200);
+  return msgs[0].slice(0, 200);
 }
 
 // Demo konfiguracije su dostupne samo kad je ENABLE_DEMOS=1 (demo deploy).
