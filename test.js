@@ -56,7 +56,7 @@ globalThis.fetch = realFetch;
 
 // 4d. pravila citljivosti odgovora (kratko, bez markdowna, liste po redovima)
 assert.match(lastBody.messages[0].content, /easy to scan/);
-assert.match(lastBody.messages[0].content, /up to 4 bullet lines/);
+assert.match(lastBody.messages[0].content, /up to 3 bullet lines/);
 
 // 5. ubacena 'system' poruka u istoriji se odbacuje
 await call({
