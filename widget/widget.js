@@ -27,6 +27,13 @@
     ".aic-m{max-width:85%;padding:8px 11px;border-radius:12px;word-wrap:break-word}" +
     ".aic-m.user{white-space:pre-wrap}" +
     ".aic-m p{margin:0 0 8px}.aic-m ul{margin:0 0 8px;padding-left:18px}.aic-m li{margin:2px 0}.aic-m>:last-child{margin-bottom:0}" +
+    ".aic-box.open{animation:aic-pop .22s ease-out}" +
+    "@keyframes aic-pop{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}" +
+    ".aic-dots{display:inline-flex;align-items:center;gap:5px;height:18px}" +
+    ".aic-dots i{width:7px;height:7px;border-radius:50%;background:#9ca3af;animation:aic-b 1.2s infinite ease-in-out}" +
+    ".aic-dots i:nth-child(2){animation-delay:.15s}.aic-dots i:nth-child(3){animation-delay:.3s}" +
+    "@keyframes aic-b{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}" +
+    "@media (prefers-reduced-motion:reduce){.aic-box.open,.aic-dots i{animation:none}}" +
     ".aic-m.bot{background:#fff;color:#111;align-self:flex-start;border:1px solid #e5e7eb}" +
     ".aic-m.user{background:" + color + ";color:#fff;align-self:flex-end}" +
     ".aic-form{display:flex;gap:6px;padding:10px;border-top:1px solid #e5e7eb;background:#fff}" +
@@ -110,7 +117,14 @@
     input.value = "";
     add(text, "user");
     busy = true;
-    var typing = add("...", "bot");
+    var typing = add("", "bot");
+    typing.className += " aic-typing";
+    typing.setAttribute("aria-label", "Typing");
+    var dots = document.createElement("span");
+    dots.className = "aic-dots";
+    for (var k = 0; k < 3; k++) dots.appendChild(document.createElement("i"));
+    typing.appendChild(dots);
+    msgs.scrollTop = msgs.scrollHeight;
 
     fetch(endpoint, {
       method: "POST",
