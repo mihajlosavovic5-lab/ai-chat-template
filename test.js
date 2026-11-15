@@ -108,7 +108,7 @@ const bk = { name: "Ana", phone: "060 111 2222", service: "Sisanje", time: "peta
 globalThis.fetch = async (url, opts) => {
   if (String(url).includes("resend.com")) { emailBody = JSON.parse(opts.body); return { ok: true, json: async () => ({}) }; }
   lastBody = JSON.parse(opts.body);
-  return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ language: "Serbian", reply: "Poslato.", booking: bk }) } }] }) };
+  return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ language: "Spanish", reply: "Enviado.", booking: bk }) } }] }) };
 };
 // 9a. bez konfiguracije: nema mejla i nema pravila u promptu
 await call({ method: "POST", headers: { "x-forwarded-for": "9.9.9.1" }, body: { message: "hocu termin" } });
@@ -121,7 +121,7 @@ const r9 = await call({ method: "POST", headers: { "x-forwarded-for": "9.9.9.2" 
 assert.match(lastBody.messages[0].content, /BOOKING REQUESTS/);
 assert.deepEqual(emailBody.to, ["vlasnik@example.com"]);
 assert.match(emailBody.text, /Ana/);
-assert.equal(r9.body.reply, "Poslato.");
+assert.equal(r9.body.reply, "Enviado.");
 // 9c. nepotpun booking (fali telefon): nema mejla
 emailBody = null;
 bk.phone = "";

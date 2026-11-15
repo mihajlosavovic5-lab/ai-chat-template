@@ -8,15 +8,15 @@ export default {
   tone: "friendly, warm and brief (2-3 sentences at most)",
 
   // Languages the assistant supports. It replies in the customer's language.
-  languages: ["English", "Serbian (Latin script, Ekavian)"],
+  languages: ["English", "Spanish"],
 
   // What the business does + everything the assistant may say
   about:
-    "Hair salon in the centre of Kragujevac. We do haircuts, colouring, blow-drying and hair care. By appointment only.",
+    "Hair salon in the centre of Demo City. We do haircuts, colouring, blow-drying and hair care. By appointment only.",
 
   hours: "Mon-Fri 09:00-20:00, Saturday 09:00-15:00, Sunday closed",
-  address: "Kralja Petra I 12, Kragujevac",
-  phone: "+381 60 000 0000",
+  address: "12 Example Street, Demo City",
+  phone: "+1 555 000 0000",
   email: "salon@example.com",
 
   // Price list (the assistant must NOT invent prices outside this list)
@@ -40,7 +40,7 @@ export default {
 
   // How to book
   booking:
-    "To book, call +381 60 000 0000 or leave your name and phone number in the chat and we will call you back.",
+    "To book, call +1 555 000 0000 or leave your name and phone number in the chat and we will call you back.",
 
   // What the assistant does when it doesn't know the answer
   fallback:

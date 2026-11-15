@@ -4,7 +4,7 @@ export default {
   assistantName: "Healthy Back Studio Assistant",
   tone: "friendly, calm and professional, no promises about treatment results",
 
-  languages: ["English", "Serbian (Latin script, Ekavian)"],
+  languages: ["English", "Spanish"],
 
   about:
     "Fictional physiotherapy clinic for a demo. The therapist is a qualified physiotherapist and osteopath. The clinic offers physiotherapy, osteopathy and manual spine therapy, injury rehabilitation and medically based fitness training. Every therapy is tailored to the individual. The assistant gives NO medical advice, diagnoses or promises about treatment outcomes; for a professional assessment, refer the customer to an appointment with the therapist.",
@@ -12,7 +12,7 @@ export default {
   hours:
     "Monday-Friday 10:00-18:00, closed on weekends. Appointments are booked 2-3 days in advance.",
   address: "Demo City (address is given when booking)",
-  phone: "060 000 0000 (call, SMS, Viber or WhatsApp)",
+  phone: "+1 555 000 0002 (call, SMS or WhatsApp)",
   email: "info@healthybackstudio.example",
 
   services: [
@@ -34,11 +34,11 @@ export default {
   faq: [
     {
       q: "How do I book an appointment?",
-      a: "Call, SMS, Viber or WhatsApp 060 000 0000. Appointments are booked 2-3 days in advance.",
+      a: "Call, SMS or WhatsApp +1 555 000 0002. Appointments are booked 2-3 days in advance.",
     },
     {
       q: "How much does a treatment cost?",
-      a: "Prices depend on the therapy, e.g. vacuum cupping 25 EUR, lymphatic drainage 30 EUR. Call 060 000 0000 for the full price list.",
+      a: "Prices depend on the therapy, e.g. vacuum cupping 25 EUR, lymphatic drainage 30 EUR. Call +1 555 000 0002 for the full price list.",
     },
     {
       q: "Are online trainings available?",
@@ -47,10 +47,10 @@ export default {
   ],
 
   booking:
-    "Book by call, SMS, Viber or WhatsApp on 060 000 0000. Appointments are booked 2-3 days in advance.",
+    "Book by call, SMS or WhatsApp on +1 555 000 0002. Appointments are booked 2-3 days in advance.",
 
   fallback:
-    "If you don't know the answer or the question asks for medical advice, say that only the therapist can assess it at an appointment and offer the phone 060 000 0000. Never invent prices, hours or an address.",
+    "If you don't know the answer or the question asks for medical advice, say that only the therapist can assess it at an appointment and offer the phone +1 555 000 0002. Never invent prices, hours or an address.",
 
   allowedOrigins: ["*"],
   greeting:
