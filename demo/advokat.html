@@ -69,10 +69,40 @@
     .note b{color:var(--dark)}
     footer{background:var(--dark);color:#bdb7a8;text-align:center;padding:30px 6vw;font-size:.78rem}
     footer b{color:var(--gold);font-weight:500}
+
+    /* ---- animations ---- */
+    #loader{position:fixed;inset:0;background:var(--cream);z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .55s ease,visibility .55s}
+    #loader.done{opacity:0;visibility:hidden;pointer-events:none}
+    .loader-mono{width:76px;height:76px;border:2px solid var(--gold);display:grid;place-items:center;font-family:'Playfair Display',serif;font-weight:700;font-size:1.9rem;animation:ld-in .6s ease both}
+    .loader-mono span{color:var(--gold)}
+    .loader-line{width:90px;height:2px;background:#eadfc9;position:relative;overflow:hidden}
+    .loader-line::after{content:"";position:absolute;inset:0;background:var(--gold);transform:translateX(-100%);animation:ld-line .9s ease-in-out forwards}
+    @keyframes ld-in{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:none}}
+    @keyframes ld-line{to{transform:translateX(0)}}
+    #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--gold);z-index:8000;transition:width .1s linear}
+    nav{transition:padding .3s ease,box-shadow .3s ease}
+    nav.scrolled{padding-top:10px;padding-bottom:10px;box-shadow:0 4px 18px rgba(0,0,0,.07)}
+    .hero-text > *{opacity:0;transform:translateY(22px);animation:rise .8s ease forwards}
+    .hero-text > :nth-child(1){animation-delay:1.0s}.hero-text > :nth-child(2){animation-delay:1.15s}
+    .hero-text > :nth-child(3){animation-delay:1.3s}.hero-text > :nth-child(4){animation-delay:1.45s}
+    .hero-art .big{animation:ld-in 1s ease 1.0s both}
+    .badge{animation:rise .8s ease 1.5s both}
+    @keyframes rise{to{opacity:1;transform:none}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+    .reveal.in{opacity:1;transform:none}
+    .btn{transition:background .25s ease,color .25s ease,border-color .25s ease,transform .25s ease}
+    .btn:hover{transform:translateY(-2px)}
+    #toTop{position:fixed;left:18px;bottom:18px;width:38px;height:38px;border:1px solid var(--gold);background:#fff;color:var(--gold);cursor:pointer;font-size:1rem;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .4s ease,transform .4s ease,background .25s ease,color .25s ease;z-index:150}
+    #toTop.show{opacity:1;transform:none;pointer-events:auto}
+    #toTop:hover{background:var(--gold);color:#fff}
+    @media (prefers-reduced-motion:reduce){#loader,.hero-text>*,.hero-art .big,.badge,.reveal,.loader-mono,.loader-line::after{animation:none!important;transition:none!important;opacity:1!important;transform:none!important}#loader{display:none}}
     @media(max-width:820px){.hero,.about,.contact{grid-template-columns:1fr}.hero-art{min-height:260px}.hero-text{padding:56px 6vw}nav ul{display:none}section{padding:60px 6vw}}
   </style>
 </head>
 <body>
+  <div id="loader"><div class="loader-mono">J<span>P</span></div><div class="loader-line"></div></div>
+  <div id="progress"></div>
+  <button id="toTop" aria-label="Back to top">&uarr;</button>
   <div class="demo-banner"><b>DEMO PAGE.</b> This is a fictional law office built to show an AI chat assistant. All names, numbers and addresses are invented.</div>
 
   <nav>
@@ -105,7 +135,7 @@
   </header>
 
   <section class="about" id="about">
-    <div>
+    <div class="reveal">
       <p class="label">About the firm</p>
       <h2>A calm place to start</h2>
       <div class="rule"></div>
@@ -113,7 +143,7 @@
       <p>Our team handles family, real estate, contract, employment and court matters for private clients and small businesses.</p>
       <div class="quote">Good legal help starts with listening.</div>
     </div>
-    <div class="facts">
+    <div class="facts reveal">
       <div class="fact"><div>Founded</div><div>Fictional, 2010</div></div>
       <div class="fact"><div>Focus</div><div>Private clients</div></div>
       <div class="fact"><div>First meeting</div><div>30 minutes</div></div>
@@ -122,10 +152,10 @@
   </section>
 
   <section id="practice">
-    <p class="label">Practice areas</p>
+    <p class="label reveal">Practice areas</p>
     <h2>How we can help</h2>
     <div class="rule"></div>
-    <div class="areas">
+    <div class="areas reveal">
       <div class="area"><h3>Family law</h3><p>Divorce, custody and child support handled with care and clear communication.</p></div>
       <div class="area"><h3>Real estate</h3><p>Purchases, document checks and property contracts, reviewed before you sign.</p></div>
       <div class="area"><h3>Contracts</h3><p>Drafting and review of agreements for individuals and small businesses.</p></div>
@@ -135,9 +165,9 @@
   </section>
 
   <section class="steps" id="process">
-    <p class="label">How it works</p>
+    <p class="label reveal">How it works</p>
     <h2>Three simple steps</h2>
-    <ol>
+    <ol class="reveal">
       <li><h3 style="color:#fff;font-size:1.1rem">Book</h3><p>Request a consultation by phone, email or through the chat assistant.</p></li>
       <li><h3 style="color:#fff;font-size:1.1rem">Meet</h3><p>A 30-minute conversation to assess your case and explain your options.</p></li>
       <li><h3 style="color:#fff;font-size:1.1rem">Decide</h3><p>You get a clear scope and price before any work begins.</p></li>
@@ -145,7 +175,7 @@
   </section>
 
   <section class="contact" id="contact">
-    <div>
+    <div class="reveal">
       <p class="label">Contact</p>
       <h2>Talk to us</h2>
       <div class="rule"></div>
@@ -156,7 +186,7 @@
         <dt>Email</dt><dd>office@justiceplus.example</dd>
       </dl>
     </div>
-    <div class="note">
+    <div class="note reveal">
       <b>Try the assistant.</b> Click the chat icon in the bottom right corner and ask about practice areas, prices or booking a consultation. It only gives general information about the firm and never legal advice.
     </div>
   </section>
@@ -197,6 +227,31 @@
     }
     b.addEventListener("click", function () { load(true); });
     (window.requestIdleCallback || function (f) { setTimeout(f, 300); })(function () { load(false); });
+  })();
+  </script>
+  <script>
+  /* page animations */
+  (function () {
+    var d = document, nav = d.querySelector("nav"), bar = d.getElementById("progress"), top = d.getElementById("toTop"), ld = d.getElementById("loader");
+    var hide = function () { ld.classList.add("done"); };
+    window.addEventListener("load", function () { setTimeout(hide, 900); });
+    setTimeout(hide, 2500); // never block the page
+    function onScroll() {
+      var y = window.pageYOffset, max = d.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (max > 0 ? (y / max) * 100 : 0) + "%";
+      nav.classList.toggle("scrolled", y > 40);
+      top.classList.toggle("show", y > 500);
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    top.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
+    var items = d.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      items.forEach(function (el) { io.observe(el); });
+    } else { items.forEach(function (el) { el.classList.add("in"); }); }
   })();
   </script>
 </body>
