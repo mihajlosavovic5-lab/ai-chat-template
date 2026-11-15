@@ -111,6 +111,11 @@ async function sendBookingEmail(cfg, bk) {
       text,
     }),
   });
+  if (!r.ok) {
+    let msg = "";
+    try { msg = (await r.text()).slice(0, 300); } catch {}
+    console.log("resend error", r.status, msg);
+  }
   return r.ok;
 }
 
