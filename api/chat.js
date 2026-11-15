@@ -226,6 +226,12 @@ export default async function handler(req, res) {
       const parsed = JSON.parse(raw);
       if (typeof parsed.reply === "string" && parsed.reply.trim()) {
         reply = parsed.reply;
+        console.log("diag", JSON.stringify({
+          bookingEnabled: bookingEnabled(cfg),
+          hasEmail: Boolean(bookingTo(cfg)),
+          hasResendKey: Boolean(process.env.RESEND_API_KEY),
+          bookingKey: parsed.booking === undefined ? "missing" : parsed.booking === null ? "null" : Object.keys(parsed.booking || {}),
+        }));
         if (bookingEnabled(cfg)) {
           const bk = cleanBooking(parsed.booking);
           const key = bk && JSON.stringify(bk);
