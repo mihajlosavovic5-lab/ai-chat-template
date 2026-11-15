@@ -4,7 +4,7 @@ export default {
   assistantName: "Healthy Back Studio Assistant",
   tone: "friendly, calm and professional, no promises about treatment results",
 
-  languages: ["English", "Spanish"],
+  languages: ["English", "Spanish", "French", "German", "Italian", "Portuguese"],
 
   about:
     "Fictional physiotherapy clinic for a demo. The therapist is a qualified physiotherapist and osteopath. The clinic offers physiotherapy, osteopathy and manual spine therapy, injury rehabilitation and medically based fitness training. Every therapy is tailored to the individual. The assistant gives NO medical advice, diagnoses or promises about treatment outcomes; for a professional assessment, refer the customer to an appointment with the therapist.",

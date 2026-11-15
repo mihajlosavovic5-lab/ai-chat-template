@@ -1,7 +1,7 @@
 // Ručni test kvaliteta na živom deployu. Upotreba:
 //   node eval.js https://ai-chat-template-iota.vercel.app advokat
 // Pošalje 15 pitanja (razmak 1.5 s) i ispiše odgovore. Ograničenje je 20 poruka / 10 min po IP.
-const [base, client = "advokat"] = process.argv.slice(2);
+const [base, client = "advokat", mode] = process.argv.slice(2);
 if (!base) { console.log("Upotreba: node eval.js <url> [client]"); process.exit(1); }
 
 const questions = [
@@ -21,6 +21,17 @@ const questions = [
   "I want to complain about a lawyer, who do I call?",
   "ok thanks, bye",
 ];
+
+// Režim "langs": samo 6 pitanja na različitim jezicima (price + booking u istoj poruci)
+const langQuestions = [
+  "How much does a first consultation cost?",
+  "¿Cuánto cuesta la primera consulta y cómo reservo?",
+  "Combien coûte la première consultation et comment réserver ?",
+  "Wie viel kostet die erste Beratung und wie kann ich buchen?",
+  "Quanto costa la prima consulenza e come posso prenotare?",
+  "Quanto custa a primeira consulta e como faço para agendar?",
+];
+if (mode === "langs") { questions.length = 0; questions.push(...langQuestions); }
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 for (const [i, message] of questions.entries()) {

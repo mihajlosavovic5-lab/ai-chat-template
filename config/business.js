@@ -8,7 +8,7 @@ export default {
   tone: "friendly, warm and brief (2-3 sentences at most)",
 
   // Languages the assistant supports. It replies in the customer's language.
-  languages: ["English", "Spanish"],
+  languages: ["English", "Spanish", "French", "German", "Italian", "Portuguese"],
 
   // What the business does + everything the assistant may say
   about:

@@ -5,7 +5,7 @@ export default {
   assistantName: "Justice Plus Law Office Assistant",
   tone: "friendly, polite and professional, no legal advice",
 
-  languages: ["English", "Spanish"],
+  languages: ["English", "Spanish", "French", "German", "Italian", "Portuguese"],
 
   about:
     "Fictional law office for a demo, based in a fictional city. It handles family law, real estate, contracts, employment law and litigation. The assistant gives NO legal advice, opinions on specific cases or assessments of chances in court; that requires a case review by a lawyer at a consultation.",
