@@ -27,13 +27,15 @@
     ".aic-m{max-width:85%;padding:8px 11px;border-radius:12px;word-wrap:break-word}" +
     ".aic-m.user{white-space:pre-wrap}" +
     ".aic-m p{margin:0 0 8px}.aic-m ul{margin:0 0 8px;padding-left:18px}.aic-m li{margin:2px 0}.aic-m>:last-child{margin-bottom:0}" +
+    ".aic-btn.aic-hop{animation:aic-hop .45s ease-out}" +
+    "@keyframes aic-hop{0%{transform:translateY(0) scale(1)}35%{transform:translateY(-9px) scale(1.08)}65%{transform:translateY(0) scale(.96)}100%{transform:translateY(0) scale(1)}}" +
     ".aic-box.open{animation:aic-pop .22s ease-out}" +
     "@keyframes aic-pop{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}" +
     ".aic-dots{display:inline-flex;align-items:center;gap:5px;height:18px}" +
     ".aic-dots i{width:7px;height:7px;border-radius:50%;background:#9ca3af;animation:aic-b 1.2s infinite ease-in-out}" +
     ".aic-dots i:nth-child(2){animation-delay:.15s}.aic-dots i:nth-child(3){animation-delay:.3s}" +
     "@keyframes aic-b{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}" +
-    "@media (prefers-reduced-motion:reduce){.aic-box.open,.aic-dots i{animation:none}}" +
+    "@media (prefers-reduced-motion:reduce){.aic-box.open,.aic-btn.aic-hop,.aic-dots i{animation:none}}" +
     ".aic-m.bot{background:#fff;color:#111;align-self:flex-start;border:1px solid #e5e7eb}" +
     ".aic-m.user{background:" + color + ";color:#fff;align-self:flex-end}" +
     ".aic-form{display:flex;gap:6px;padding:10px;border-top:1px solid #e5e7eb;background:#fff}" +
@@ -103,8 +105,22 @@
   add(greeting, "bot");
 
   btn.addEventListener("click", function () {
+    btn.classList.remove("aic-hop");
+    void btn.offsetWidth; // restart animacije pri brzom ponovnom kliku
+    btn.classList.add("aic-hop");
     box.classList.toggle("open");
     if (box.classList.contains("open")) input.focus();
+  });
+  btn.addEventListener("animationend", function () { btn.classList.remove("aic-hop"); });
+
+  // Klik van chata (ili Escape) zatvara chat.
+  document.addEventListener("click", function (e) {
+    if (!box.classList.contains("open")) return;
+    if (box.contains(e.target) || btn.contains(e.target)) return;
+    box.classList.remove("open");
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") box.classList.remove("open");
   });
   box.querySelector(".aic-x").addEventListener("click", function () {
     box.classList.remove("open");
