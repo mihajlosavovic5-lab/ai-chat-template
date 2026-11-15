@@ -18,12 +18,16 @@
 6. `vercel --prod`, otvori `/api/chat` testom iz chata.
 
 ## 3. Ugradnja na sajt klijenta
-Jedan red u `<head>` (sa `defer`, da se widget preuzima paralelno sa stranicom i ikonica se pojavi odmah):
+Kod sa stranice `demo/advokat.html` (blok `<script>` pred `</body>`) kopiraš na sajt klijenta i menjaš samo objekat `c`
+(`src`, `endpoint` na domen projekta, `title`, `greeting`, `color`, `client` obriši).
+Ikonica je u stranici odmah (bez čekanja mreže), a ceo chat se učita u pozadini i neprimetno je zameni.
+Jednostavnija varijanta (ikonica se pojavi tek kad se skripta preuzme):
 ```html
 <script defer src="https://<projekat>.vercel.app/widget/widget.js"
         data-endpoint="https://<projekat>.vercel.app/api/chat"
         data-title="..." data-greeting="..." data-color="#..."></script>
 ```
+Ako sajt ima stroga CSP pravila, treba dozvoliti domen projekta.
 
 ## 4. Test pre isporuke
 - Pitanje o ceni, radnom vremenu, nepoznata tema (mora da uputi na kontakt)

@@ -10,6 +10,8 @@
  */
 (function () {
   var s = document.currentScript;
+  if (window.__aicLoaded) return; // sprecava dupli widget
+  window.__aicLoaded = true;
   var endpoint = s.getAttribute("data-endpoint") || "/api/chat";
   var title = s.getAttribute("data-title") || "Asistent";
   var greeting = s.getAttribute("data-greeting") || "Zdravo! Kako mogu da pomognem?";
@@ -65,6 +67,11 @@
   }
   if (document.body) mount();
   else document.addEventListener("DOMContentLoaded", mount);
+  // data-open="1": otvori chat odmah (kad je kupac kliknuo na ikonicu pre nego sto se widget ucitao)
+  if (s.getAttribute("data-open") === "1") {
+    box.classList.add("open");
+    input.focus();
+  }
 
   var msgs = box.querySelector(".aic-msgs");
   var input = box.querySelector(".aic-in");

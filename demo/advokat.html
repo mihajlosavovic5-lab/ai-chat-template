@@ -11,12 +11,6 @@
     h1{margin:0 0 8px;color:#1f3a5f}
     main{max-width:720px;margin:32px auto;padding:0 24px}
   </style>
-  <script defer src="../widget/widget.js"
-          data-endpoint="/api/chat"
-          data-title="Justice Plus Law Office Assistant"
-          data-greeting="Hello! I'm the Justice Plus Law Office assistant. Ask me about practice areas, prices or booking a consultation."
-          data-color="#1f3a5f"
-          data-client="advokat"></script>
 </head>
 <body>
   <header>
@@ -26,5 +20,39 @@
   <main>
     <p>This is a demo page. Click the chat in the bottom right corner and ask about practice areas, prices or booking a consultation.</p>
   </main>
+  <script>
+  /* Instant chat icon: inline (no network wait); the full chat loads right after. */
+  (function () {
+    var d = document, c = {
+      src: "../widget/widget.js",
+      endpoint: "/api/chat",
+      title: "Justice Plus Law Office Assistant",
+      greeting: "Hello! I'm the Justice Plus Law Office assistant. Ask me about practice areas, prices or booking a consultation.",
+      color: "#1f3a5f",
+      client: "advokat"
+    };
+    var b = d.createElement("button"), loaded = false;
+    b.setAttribute("aria-label", c.title);
+    b.textContent = "\uD83D\uDCAC";
+    b.style.cssText = "position:fixed;right:20px;bottom:20px;width:56px;height:56px;border-radius:50%;border:0;background:" + c.color + ";color:#fff;font-size:26px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);z-index:99998";
+    d.body.appendChild(b);
+    function load(open) {
+      if (loaded) return;
+      loaded = true;
+      var s = d.createElement("script");
+      s.src = c.src;
+      s.setAttribute("data-endpoint", c.endpoint);
+      s.setAttribute("data-title", c.title);
+      s.setAttribute("data-greeting", c.greeting);
+      s.setAttribute("data-color", c.color);
+      s.setAttribute("data-client", c.client);
+      if (open) s.setAttribute("data-open", "1");
+      s.onload = function () { b.remove(); };
+      d.head.appendChild(s);
+    }
+    b.addEventListener("click", function () { load(true); });
+    (window.requestIdleCallback || function (f) { setTimeout(f, 300); })(function () { load(false); });
+  })();
+  </script>
 </body>
 </html>
