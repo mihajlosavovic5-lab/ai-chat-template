@@ -43,6 +43,17 @@ assert.match(lastBody.messages[0].content, /Musko sisanje: 800 RSD/);
 // 4b. pravilo: jezik asistenta nije jezik osoblja (sprecava izmisljanje)
 assert.match(lastBody.messages[0].content, /describe only YOU/);
 
+// 4c. JSON odgovor se raspakuje, a obican tekst ostaje kao fallback
+const realFetch = globalThis.fetch;
+globalThis.fetch = async (url, opts) => {
+  lastBody = JSON.parse(opts.body);
+  return { ok: true, json: async () => ({ choices: [{ message: { content: '{"language":"English","reply":"Hello there"}' } }] }) };
+};
+const j = await call({ method: "POST", headers: { "x-forwarded-for": "2.2.2.2" }, body: { message: "hi" } });
+assert.equal(j.body.reply, "Hello there");
+assert.equal(lastBody.response_format.type, "json_object");
+globalThis.fetch = realFetch;
+
 // 5. ubacena 'system' poruka u istoriji se odbacuje
 await call({
   method: "POST",
