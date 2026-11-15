@@ -40,11 +40,11 @@
     ".aic-ov.open{opacity:1;pointer-events:auto}" +
     "@media (max-width:600px){" +
       ".aic-ov{display:block}" +
-      ".aic-box{left:10px;right:10px;width:auto;max-width:none;top:calc(var(--aic-top,0px) + var(--aic-vh,100dvh) / 2);bottom:auto;height:min(500px,calc(var(--aic-vh,100dvh) - 20px));max-height:none;border-radius:18px;transform:translateY(-50%)}" +
+      ".aic-box{left:10px;right:10px;width:auto;max-width:none;top:var(--aic-top,10vh);bottom:auto;height:var(--aic-h,70vh);max-height:none;border-radius:18px;transition:top .3s cubic-bezier(.2,.8,.2,1),height .3s cubic-bezier(.2,.8,.2,1)}" +
       ".aic-box.open{animation:aic-pop-m .34s cubic-bezier(.2,.8,.2,1) both}" +
       ".aic-box.closing{animation:aic-out-m .2s ease-in forwards}" +
-      "@keyframes aic-pop-m{from{opacity:0;transform:translateY(calc(-50% + 28px)) scale(.96)}to{opacity:1;transform:translateY(-50%) scale(1)}}" +
-      "@keyframes aic-out-m{from{opacity:1;transform:translateY(-50%) scale(1)}to{opacity:0;transform:translateY(calc(-50% + 20px)) scale(.97)}}" +
+      "@keyframes aic-pop-m{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}" +
+      "@keyframes aic-out-m{from{opacity:1;transform:none}to{opacity:0;transform:translateY(16px) scale(.97)}}" +
       ".aic-in{font-size:16px}" +
       ".aic-x{font-size:30px;line-height:1;padding:0 6px}" +
       "html.aic-open{overflow:hidden}" +
@@ -157,14 +157,17 @@
   function fit() {
     var vv = window.visualViewport;
     if (!isMobile() || !vv) {
-      box.style.removeProperty("--aic-vh");
+      box.style.removeProperty("--aic-h");
       box.style.removeProperty("--aic-top");
       return;
     }
-    box.style.setProperty("--aic-vh", vv.height + "px");
-    box.style.setProperty("--aic-top", vv.offsetTop + "px");
-    msgs.scrollTop = msgs.scrollHeight;
+    var h = Math.min(500, vv.height - 20);
+    var top = vv.offsetTop + Math.max(10, (vv.height - h) / 2);
+    box.style.setProperty("--aic-h", Math.round(h) + "px");
+    box.style.setProperty("--aic-top", Math.round(top) + "px");
   }
+  // posle glatke promene visine, poruke ostaju skrolovane do dna
+  box.addEventListener("transitionend", function () { msgs.scrollTop = msgs.scrollHeight; });
   if (window.visualViewport) {
     window.visualViewport.addEventListener("resize", fit);
     window.visualViewport.addEventListener("scroll", fit);
