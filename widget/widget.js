@@ -36,6 +36,16 @@
     ".aic-chip{border:1px solid " + color + ";background:#fff;color:" + color + ";border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;transition:background .2s,color .2s,transform .2s;animation:aic-chip .35s ease both}" +
     ".aic-chip:hover{background:" + color + ";color:#fff;transform:translateY(-1px)}" +
     "@keyframes aic-chip{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}" +
+    ".aic-ov{display:none;position:fixed;inset:0;background:rgba(15,23,42,.4);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:99997}" +
+    ".aic-ov.open{opacity:1;pointer-events:auto}" +
+    "@media (max-width:600px){" +
+      ".aic-ov{display:block}" +
+      ".aic-box{left:10px;right:10px;width:auto;max-width:none;top:calc(var(--aic-top,0px) + 10px);bottom:auto;height:calc(var(--aic-vh,100dvh) - 20px);max-height:none;border-radius:18px}" +
+      ".aic-in{font-size:16px}" +
+      ".aic-x{font-size:30px;line-height:1;padding:0 6px}" +
+      "html.aic-open{overflow:hidden}" +
+      "html.aic-open .aic-btn{display:none}" +
+    "}" +
     ".aic-box.open{animation:aic-pop .22s ease-out}" +
     "@keyframes aic-pop{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}" +
     ".aic-dots{display:inline-flex;align-items:center;gap:5px;height:18px}" +
@@ -66,18 +76,16 @@
     '<form class="aic-form"><input class="aic-in" maxlength="500" autocomplete="off"><button class="aic-send" type="submit">➤</button></form>';
   box.querySelector(".aic-head span").textContent = title;
 
+  var ov = document.createElement("div");
+  ov.className = "aic-ov";
+
   function mount() {
     document.body.appendChild(btn);
+    document.body.appendChild(ov);
     document.body.appendChild(box);
   }
   if (document.body) mount();
   else document.addEventListener("DOMContentLoaded", mount);
-  // data-open="1": otvori chat odmah (kad je kupac kliknuo na ikonicu pre nego sto se widget ucitao)
-  if (s.getAttribute("data-open") === "1") {
-    box.classList.add("open");
-    input.focus();
-  }
-
   var msgs = box.querySelector(".aic-msgs");
   var input = box.querySelector(".aic-in");
   var history = [];
@@ -139,12 +147,40 @@
     msgs.appendChild(chips);
   }
 
+  function isMobile() { return window.matchMedia("(max-width:600px)").matches; }
+  // Na telefonu chat prati vidljivi deo ekrana (iznad tastature), da se naslov i polje uvek vide.
+  function fit() {
+    var vv = window.visualViewport;
+    if (!isMobile() || !vv) {
+      box.style.removeProperty("--aic-vh");
+      box.style.removeProperty("--aic-top");
+      return;
+    }
+    box.style.setProperty("--aic-vh", vv.height + "px");
+    box.style.setProperty("--aic-top", vv.offsetTop + "px");
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", fit);
+    window.visualViewport.addEventListener("scroll", fit);
+  }
+  window.addEventListener("resize", fit);
+
+  function setOpen(v) {
+    box.classList.toggle("open", v);
+    ov.classList.toggle("open", v);
+    document.documentElement.classList.toggle("aic-open", v && isMobile());
+    if (v) {
+      fit();
+      if (!isMobile()) input.focus(); // na telefonu ne otvaramo tastaturu sami
+    }
+  }
+
   btn.addEventListener("click", function () {
     btn.classList.remove("aic-hop");
     void btn.offsetWidth; // restart animacije pri brzom ponovnom kliku
     btn.classList.add("aic-hop");
-    box.classList.toggle("open");
-    if (box.classList.contains("open")) input.focus();
+    setOpen(!box.classList.contains("open"));
   });
   btn.addEventListener("animationend", function () { btn.classList.remove("aic-hop"); });
 
@@ -152,14 +188,15 @@
   document.addEventListener("click", function (e) {
     if (!box.classList.contains("open")) return;
     if (box.contains(e.target) || btn.contains(e.target)) return;
-    box.classList.remove("open");
+    setOpen(false);
   });
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") box.classList.remove("open");
+    if (e.key === "Escape") setOpen(false);
   });
-  box.querySelector(".aic-x").addEventListener("click", function () {
-    box.classList.remove("open");
-  });
+  box.querySelector(".aic-x").addEventListener("click", function () { setOpen(false); });
+
+  // data-open="1": otvori chat odmah (kad je kupac kliknuo na ikonicu pre nego sto se widget ucitao)
+  if (s.getAttribute("data-open") === "1") setOpen(true);
 
   var form = box.querySelector(".aic-form");
   form.addEventListener("submit", function (e) {
