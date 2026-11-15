@@ -40,6 +40,9 @@ assert.equal(ok.status, 200);
 assert.equal(ok.body.reply, "Ok!");
 assert.match(lastBody.messages[0].content, /Musko sisanje: 800 RSD/);
 
+// 4b. pravilo: jezik asistenta nije jezik osoblja (sprecava izmisljanje)
+assert.match(lastBody.messages[0].content, /describe only YOU/);
+
 // 5. ubacena 'system' poruka u istoriji se odbacuje
 await call({
   method: "POST",
