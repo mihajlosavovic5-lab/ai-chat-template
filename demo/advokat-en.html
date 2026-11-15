@@ -202,9 +202,10 @@
       src: "../widget/widget.js",
       endpoint: "/api/chat",
       title: "Justice Plus Law Office Assistant",
-      greeting: "Hello! I'm the Justice Plus Law Office assistant. Ask me about practice areas, prices or booking a consultation.",
+      greeting: "Hello, and welcome to Justice Plus! I'm the firm's virtual assistant. What would you like to know?",
       color: "#1f3a5f",
-      client: "advokat"
+      client: "advokat",
+      suggestions: "Practice areas|Consultation price|Book a consultation"
     };
     var b = d.createElement("button"), loaded = false;
     b.setAttribute("aria-label", c.title);
@@ -221,6 +222,7 @@
       s.setAttribute("data-greeting", c.greeting);
       s.setAttribute("data-color", c.color);
       s.setAttribute("data-client", c.client);
+      s.setAttribute("data-suggestions", c.suggestions);
       if (open) s.setAttribute("data-open", "1");
       s.onload = function () { b.remove(); };
       d.head.appendChild(s);

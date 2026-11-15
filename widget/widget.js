@@ -17,6 +17,7 @@
   var greeting = s.getAttribute("data-greeting") || "Zdravo! Kako mogu da pomognem?";
   var color = s.getAttribute("data-color") || "#2563eb";
   var client = s.getAttribute("data-client") || "";
+  var suggestions = (s.getAttribute("data-suggestions") || "").split("|").map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 4);
   var errorText = s.getAttribute("data-error") || "Doslo je do greske. Pokusajte ponovo.";
 
   var css =
@@ -31,13 +32,17 @@
     ".aic-m p{margin:0 0 8px}.aic-m ul{margin:0 0 8px;padding-left:18px}.aic-m li{margin:2px 0}.aic-m>:last-child{margin-bottom:0}" +
     ".aic-btn.aic-hop{animation:aic-hop .35s ease-in-out}" +
     "@keyframes aic-hop{0%,100%{transform:translateY(0) scale(1)}45%{transform:translateY(-3px) scale(1.04)}}" +
+    ".aic-chips{display:flex;flex-wrap:wrap;gap:6px;align-self:flex-start;max-width:92%}" +
+    ".aic-chip{border:1px solid " + color + ";background:#fff;color:" + color + ";border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;transition:background .2s,color .2s,transform .2s;animation:aic-chip .35s ease both}" +
+    ".aic-chip:hover{background:" + color + ";color:#fff;transform:translateY(-1px)}" +
+    "@keyframes aic-chip{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}" +
     ".aic-box.open{animation:aic-pop .22s ease-out}" +
     "@keyframes aic-pop{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}" +
     ".aic-dots{display:inline-flex;align-items:center;gap:5px;height:18px}" +
     ".aic-dots i{width:7px;height:7px;border-radius:50%;background:#9ca3af;animation:aic-b 1.2s infinite ease-in-out}" +
     ".aic-dots i:nth-child(2){animation-delay:.15s}.aic-dots i:nth-child(3){animation-delay:.3s}" +
     "@keyframes aic-b{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}" +
-    "@media (prefers-reduced-motion:reduce){.aic-box.open,.aic-btn.aic-hop,.aic-dots i{animation:none}}" +
+    "@media (prefers-reduced-motion:reduce){.aic-box.open,.aic-btn.aic-hop,.aic-dots i,.aic-chip{animation:none}}" +
     ".aic-m.bot{background:#fff;color:#111;align-self:flex-start;border:1px solid #e5e7eb}" +
     ".aic-m.user{background:" + color + ";color:#fff;align-self:flex-end}" +
     ".aic-form{display:flex;gap:6px;padding:10px;border-top:1px solid #e5e7eb;background:#fff}" +
@@ -115,6 +120,25 @@
 
   add(greeting, "bot");
 
+  var chips = null;
+  if (suggestions.length) {
+    chips = document.createElement("div");
+    chips.className = "aic-chips";
+    suggestions.forEach(function (label, i) {
+      var c = document.createElement("button");
+      c.type = "button";
+      c.className = "aic-chip";
+      c.style.animationDelay = (0.15 + i * 0.08) + "s";
+      c.textContent = label; // textContent (bez XSS)
+      c.addEventListener("click", function () {
+        input.value = label;
+        form.dispatchEvent(new Event("submit", { cancelable: true }));
+      });
+      chips.appendChild(c);
+    });
+    msgs.appendChild(chips);
+  }
+
   btn.addEventListener("click", function () {
     btn.classList.remove("aic-hop");
     void btn.offsetWidth; // restart animacije pri brzom ponovnom kliku
@@ -137,11 +161,13 @@
     box.classList.remove("open");
   });
 
-  box.querySelector(".aic-form").addEventListener("submit", function (e) {
+  var form = box.querySelector(".aic-form");
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
     var text = input.value.trim();
     if (!text || busy) return;
     input.value = "";
+    if (chips && chips.parentNode) chips.parentNode.removeChild(chips);
     add(text, "user");
     busy = true;
     var typing = add("", "bot");
