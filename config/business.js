@@ -12,19 +12,19 @@ export default {
 
   // What the business does + everything the assistant may say
   about:
-    "Hair salon in the centre of Demo City. We do haircuts, colouring, blow-drying and hair care. By appointment only.",
+    "Hair salon in the center of Demo City. We do haircuts, coloring, blow-drying and hair care. By appointment only.",
 
-  hours: "Mon-Fri 09:00-20:00, Saturday 09:00-15:00, Sunday closed",
+  hours: "Mon-Fri 9 AM-8 PM, Saturday 9 AM-3 PM, Sunday closed",
   address: "12 Example Street, Demo City",
-  phone: "+1 555 000 0000",
+  phone: "(555) 010-0000",
   email: "salon@example.com",
 
   // Price list (the assistant must NOT invent prices outside this list)
   services: [
-    { name: "Men's haircut", price: "8 EUR", duration: "30 min" },
-    { name: "Women's haircut", price: "15 EUR", duration: "45 min" },
-    { name: "Colouring", price: "from 35 EUR", duration: "90-120 min" },
-    { name: "Blow-dry", price: "10 EUR", duration: "30 min" },
+    { name: "Men's haircut", price: "$35", duration: "30 min" },
+    { name: "Women's haircut", price: "$65", duration: "45 min" },
+    { name: "Coloring", price: "from $120", duration: "90-120 min" },
+    { name: "Blow-dry", price: "$45", duration: "30 min" },
   ],
 
   faq: [
@@ -40,7 +40,7 @@ export default {
 
   // How to book
   booking:
-    "To book, call +1 555 000 0000 or leave your name and phone number in the chat and we will call you back.",
+    "To book, call (555) 010-0000 or leave your name and phone number in the chat and we will call you back.",
 
   // What the assistant does when it doesn't know the answer
   fallback:
@@ -51,7 +51,7 @@ export default {
   // bookingEmail: "owner@business.com",
   allowedOrigins: ["*"],
 
-  // First chat message + widget colour
+  // First chat message + widget color
   greeting: "Hello! I'm Lena AI. Ask me about prices, opening hours or appointments.",
   accentColor: "#c2185b",
 };

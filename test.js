@@ -38,7 +38,7 @@ assert.equal((await call({ method: "POST", body: { message: "a".repeat(501) } })
 const ok = await call({ method: "POST", body: { message: "Koliko kosta musko sisanje?" } });
 assert.equal(ok.status, 200);
 assert.equal(ok.body.reply, "Ok!");
-assert.match(lastBody.messages[0].content, /Men's haircut: 8 EUR/);
+assert.match(lastBody.messages[0].content, /Men's haircut: \$35/);
 
 // 4b. pravilo: jezik asistenta nije jezik osoblja (sprecava izmisljanje)
 assert.match(lastBody.messages[0].content, /describe only YOU/);
