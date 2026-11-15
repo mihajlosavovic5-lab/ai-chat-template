@@ -129,4 +129,13 @@ await call({ method: "POST", headers: { "x-forwarded-for": "9.9.9.3" }, body: { 
 assert.equal(emailBody, null);
 delete biz.bookingEmail; delete process.env.RESEND_API_KEY;
 
+// 10. jezicki uzorak: ime ne menja jezik, poslednja poruka sa 2+ reci je uzorak
+globalThis.fetch = async (url, opts) => { lastBody = JSON.parse(opts.body); return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ language: "English", reply: "ok" }) } }] }) }; };
+await call({ method: "POST", headers: { "x-forwarded-for": "10.0.0.1" }, body: { message: "Mihajlo", history: [{ role: "user", content: "I'd like to book an appointment" }, { role: "assistant", content: "Your name?" }] } });
+const rem = lastBody.messages.at(-2).content;
+assert.match(rem, /I'd like to book an appointment/);
+assert.doesNotMatch(rem, /"Mihajlo"/);
+await call({ method: "POST", headers: { "x-forwarded-for": "10.0.0.2" }, body: { message: "Mihajlo", history: [] } });
+assert.match(lastBody.messages.at(-2).content, /"Mihajlo"/);
+
 console.log("Svi testovi prosli.");
