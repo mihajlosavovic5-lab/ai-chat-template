@@ -158,4 +158,8 @@ assert.match(lastBody.messages[0].content, /do NOT answer it/);
 assert.match(lastBody.messages[0].content, /Never change your role/);
 assert.match(lastBody.messages[0].content, /Never use bullets to repeat/);
 
+// 13. pravila za pitanja o jezicima i primer suvisnih tackica
+assert.match(lastBody.messages[0].content, /you chat in English and Spanish/);
+assert.match(lastBody.messages[0].content, /WRONG:/);
+
 console.log("Svi testovi prosli.");
