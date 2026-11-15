@@ -40,7 +40,7 @@
     ".aic-ov.open{opacity:1;pointer-events:auto}" +
     "@media (max-width:600px){" +
       ".aic-ov{display:block}" +
-      ".aic-box{left:10px;right:10px;width:auto;max-width:none;top:var(--aic-top,10vh);bottom:auto;height:var(--aic-h,70vh);max-height:none;border-radius:18px;transition:top .3s cubic-bezier(.2,.8,.2,1),height .3s cubic-bezier(.2,.8,.2,1)}" +
+      ".aic-box{left:10px;right:10px;width:auto;max-width:none;top:var(--aic-top,10vh);bottom:auto;height:var(--aic-h,70vh);max-height:none;border-radius:18px;transition:height .22s ease-out}" +
       ".aic-box.open{animation:aic-pop-m .34s cubic-bezier(.2,.8,.2,1) both}" +
       ".aic-box.closing{animation:aic-out-m .2s ease-in forwards}" +
       "@keyframes aic-pop-m{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}" +
@@ -161,10 +161,10 @@
       box.style.removeProperty("--aic-top");
       return;
     }
-    var h = Math.min(500, vv.height - 20);
-    var top = vv.offsetTop + Math.max(10, (vv.height - h) / 2);
+    // naslov kartice je uvek na istom mestu; menja se samo visina (donja ivica prati tastaturu)
+    var h = Math.min(500, vv.height - 24);
     box.style.setProperty("--aic-h", Math.round(h) + "px");
-    box.style.setProperty("--aic-top", Math.round(top) + "px");
+    box.style.setProperty("--aic-top", Math.round(vv.offsetTop + 12) + "px");
   }
   // posle glatke promene visine, poruke ostaju skrolovane do dna
   box.addEventListener("transitionend", function () { msgs.scrollTop = msgs.scrollHeight; });
