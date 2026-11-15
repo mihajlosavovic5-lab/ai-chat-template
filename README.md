@@ -47,3 +47,11 @@ Za demo uživo: `vercel dev` pa otvori `/demo/index.html`.
 | Trošak tebi | OpenAI gpt-4o-mini, obično par EUR mesečno za mali biznis, proveri na svom nalogu |
 
 Prvi klijent: ponudi besplatan pilot 14 dana za testimonial.
+
+## Demo deploy (portfolio sa vise demoa na jednom linku)
+
+Na demo projektu postavi env var `ENABLE_DEMOS=1`. Tada widget sa `data-client="salon|ordinacija|advokat"`
+bira izmisljenu konfiguraciju iz `config/demos.js`. Na deployu pravog klijenta NE postavljaj `ENABLE_DEMOS`:
+tada uvek vazi samo `config/business.js`.
+
+Demo stranice: `/demo/index.html` (salon), `/demo/ordinacija.html`, `/demo/advokat.html`.

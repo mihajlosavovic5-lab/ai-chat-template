@@ -5,7 +5,8 @@
  *           data-endpoint="https://TVOJ-DOMEN/api/chat"
  *           data-title="Lena AI"
  *           data-greeting="Zdravo! Kako mogu da pomognem?"
- *           data-color="#c2185b"></script>
+ *           data-color="#c2185b"
+ *           data-client="salon"></script>   (data-client: samo za demo deploy)
  */
 (function () {
   var s = document.currentScript;
@@ -13,6 +14,7 @@
   var title = s.getAttribute("data-title") || "Asistent";
   var greeting = s.getAttribute("data-greeting") || "Zdravo! Kako mogu da pomognem?";
   var color = s.getAttribute("data-color") || "#2563eb";
+  var client = s.getAttribute("data-client") || "";
   var errorText = s.getAttribute("data-error") || "Doslo je do greske. Pokusajte ponovo.";
 
   var css =
@@ -85,7 +87,7 @@
     fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text, history: history.slice(-10) }),
+      body: JSON.stringify({ message: text, history: history.slice(-10), client: client }),
     })
       .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
       .then(function (res) {

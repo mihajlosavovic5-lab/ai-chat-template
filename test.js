@@ -79,4 +79,22 @@ for (let i = 0; i < 30; i++) {
 }
 assert.ok(limited, "rate limit treba da se aktivira");
 
+// 7. demo konfiguracije: iskljucene po defaultu (ne cure na deploy pravog klijenta)
+delete process.env.ENABLE_DEMOS;
+await call({ method: "POST", headers: { "x-forwarded-for": "3.3.3.3" }, body: { message: "x", client: "advokat" } });
+assert.match(lastBody.messages[0].content, /Salon Lena/, "bez ENABLE_DEMOS uvek vazi config/business.js");
+
+// 8. sa ENABLE_DEMOS=1 bira se trazeni demo, nepoznat klijent pada na default
+process.env.ENABLE_DEMOS = "1";
+await call({ method: "POST", headers: { "x-forwarded-for": "4.4.4.4" }, body: { message: "x", client: "advokat" } });
+assert.match(lastBody.messages[0].content, /Pravda Plus/);
+assert.doesNotMatch(lastBody.messages[0].content, /Salon Lena/);
+await call({ method: "POST", headers: { "x-forwarded-for": "5.5.5.5" }, body: { message: "x", client: "ordinacija" } });
+assert.match(lastBody.messages[0].content, /Studio Zdrava Leđa/);
+await call({ method: "POST", headers: { "x-forwarded-for": "6.6.6.6" }, body: { message: "x", client: "__proto__" } });
+assert.match(lastBody.messages[0].content, /Salon Lena/, "nepoznat client -> default");
+await call({ method: "POST", headers: { "x-forwarded-for": "7.7.7.7" }, body: { message: "x", client: "toString" } });
+assert.match(lastBody.messages[0].content, /Salon Lena/, "naziv iz prototipa -> default");
+delete process.env.ENABLE_DEMOS;
+
 console.log("Svi testovi prosli.");
