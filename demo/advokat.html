@@ -17,7 +17,7 @@
     .demo-banner b{color:var(--gold);font-weight:500}
     nav{display:flex;align-items:center;justify-content:space-between;padding:18px 6vw;border-bottom:1px solid #eadfc9;background:#fff;position:sticky;top:0;z-index:50}
     .logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--dark)}
-    .mono{width:42px;height:42px;border:2px solid var(--gold);display:grid;place-items:center;font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;background:var(--cream)}
+    .mono{width:42px;height:42px;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;line-height:1;font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;background:var(--cream)}
     .mono span{color:var(--gold)}
     .logo small{display:block;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
     .logo strong{font-family:'Playfair Display',serif;font-size:1.05rem}
@@ -73,7 +73,7 @@
     /* ---- animations ---- */
     #loader{position:fixed;inset:0;background:var(--cream);z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .55s ease,visibility .55s}
     #loader.done{opacity:0;visibility:hidden;pointer-events:none}
-    .loader-mono{width:76px;height:76px;border:2px solid var(--gold);display:grid;place-items:center;font-family:'Playfair Display',serif;font-weight:700;font-size:1.9rem;animation:ld-in .6s ease both}
+    .loader-mono{width:76px;height:76px;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;line-height:1;font-family:'Playfair Display',serif;font-weight:700;font-size:1.9rem;animation:ld-in .6s ease both}
     .loader-mono span{color:var(--gold)}
     .loader-line{width:90px;height:2px;background:#eadfc9;position:relative;overflow:hidden}
     .loader-line::after{content:"";position:absolute;inset:0;background:var(--gold);transform:translateX(-100%);animation:ld-line .9s ease-in-out forwards}
