@@ -127,6 +127,15 @@ emailBody = null;
 bk.phone = "";
 await call({ method: "POST", headers: { "x-forwarded-for": "9.9.9.3" }, body: { message: "hocu termin" } });
 assert.equal(emailBody, null);
+// 9d. duplikat istog zahteva u 10 min se ne salje dvaput
+bk.phone = "060 111 2222"; bk.name = "Marko";
+emailBody = null;
+await call({ method: "POST", headers: { "x-forwarded-for": "9.9.9.4" }, body: { message: "ok ok" } });
+assert.ok(emailBody, "prvi put salje");
+emailBody = null;
+await call({ method: "POST", headers: { "x-forwarded-for": "9.9.9.5" }, body: { message: "ok ok" } });
+assert.equal(emailBody, null, "duplikat se ne salje");
+assert.match(lastBody.messages[0].content, /ALWAYS include a third key "booking"/);
 delete biz.bookingEmail; delete process.env.RESEND_API_KEY;
 
 // 10. jezicki uzorak: ime ne menja jezik, poslednja poruka sa 2+ reci je uzorak
