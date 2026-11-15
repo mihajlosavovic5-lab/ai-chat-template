@@ -74,7 +74,7 @@ function bookingEnabled(cfg) {
 
 function bookingRules(b) {
   if (!bookingEnabled(b)) return "";
-  return `- BOOKING REQUESTS: if the customer wants an appointment, collect these four things, asking for ONE missing item at a time: name, phone number, service, preferred day and time. When you have all four, add a third key "booking" to the JSON: {"name": ..., "phone": ..., "service": ..., "time": ...} and in "reply" say the request was sent and the business will confirm the slot (never say the slot is confirmed). Without all four, do not include "booking". Send a booking only once per request.
+  return `- BOOKING REQUESTS: if the customer wants an appointment, collect these four things, asking for ONE missing item at a time: name, phone number, service, preferred day and time. When you have all four, add a third key "booking" to the JSON: {"name": ..., "phone": ..., "service": ..., "time": ...} and in "reply" say the request was sent and the business will confirm the slot (never say the slot is confirmed). Without all four, do not include "booking". Send a booking only once per request. The confirmation reply must be in the customer's language (the language of the reference message), never in the language of the business information.
 `;
 }
 
@@ -192,6 +192,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: MODEL,
         max_tokens: 400,
+        temperature: 0.3,
         response_format: { type: "json_object" },
         messages: [
           { role: "system", content: buildSystemPrompt(cfg) },
