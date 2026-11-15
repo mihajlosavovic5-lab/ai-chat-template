@@ -20,7 +20,7 @@
 ## 3. Ugradnja na sajt klijenta
 Jedan red pred `</body>`:
 ```html
-<script src="https://<projekat>.vercel.app/widget/widget.js"
+<script defer src="https://<projekat>.vercel.app/widget/widget.js"
         data-endpoint="https://<projekat>.vercel.app/api/chat"
         data-title="..." data-greeting="..." data-color="#..."></script>
 ```

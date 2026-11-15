@@ -27,8 +27,8 @@
     ".aic-m{max-width:85%;padding:8px 11px;border-radius:12px;word-wrap:break-word}" +
     ".aic-m.user{white-space:pre-wrap}" +
     ".aic-m p{margin:0 0 8px}.aic-m ul{margin:0 0 8px;padding-left:18px}.aic-m li{margin:2px 0}.aic-m>:last-child{margin-bottom:0}" +
-    ".aic-btn.aic-hop{animation:aic-hop .45s ease-out}" +
-    "@keyframes aic-hop{0%{transform:translateY(0) scale(1)}35%{transform:translateY(-9px) scale(1.08)}65%{transform:translateY(0) scale(.96)}100%{transform:translateY(0) scale(1)}}" +
+    ".aic-btn.aic-hop{animation:aic-hop .35s ease-in-out}" +
+    "@keyframes aic-hop{0%,100%{transform:translateY(0) scale(1)}45%{transform:translateY(-3px) scale(1.04)}}" +
     ".aic-box.open{animation:aic-pop .22s ease-out}" +
     "@keyframes aic-pop{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}" +
     ".aic-dots{display:inline-flex;align-items:center;gap:5px;height:18px}" +
@@ -59,8 +59,12 @@
     '<form class="aic-form"><input class="aic-in" maxlength="500" autocomplete="off"><button class="aic-send" type="submit">➤</button></form>';
   box.querySelector(".aic-head span").textContent = title;
 
-  document.body.appendChild(btn);
-  document.body.appendChild(box);
+  function mount() {
+    document.body.appendChild(btn);
+    document.body.appendChild(box);
+  }
+  if (document.body) mount();
+  else document.addEventListener("DOMContentLoaded", mount);
 
   var msgs = box.querySelector(".aic-msgs");
   var input = box.querySelector(".aic-in");
