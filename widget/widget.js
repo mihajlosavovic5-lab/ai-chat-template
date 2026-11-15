@@ -40,7 +40,9 @@
     ".aic-ov.open{opacity:1;pointer-events:auto}" +
     "@media (max-width:600px){" +
       ".aic-ov{display:block}" +
-      ".aic-box{left:10px;right:10px;width:auto;max-width:none;top:calc(var(--aic-top,0px) + 10px);bottom:auto;height:calc(var(--aic-vh,100dvh) - 20px);max-height:none;border-radius:18px}" +
+      ".aic-box{left:10px;right:10px;width:auto;max-width:none;top:calc(var(--aic-top,0px) + var(--aic-vh,100dvh) / 2);bottom:auto;height:min(500px,calc(var(--aic-vh,100dvh) - 20px));max-height:none;border-radius:18px;transform:translateY(-50%)}" +
+      ".aic-box.open{animation:aic-pop-m .25s ease-out}" +
+      "@keyframes aic-pop-m{from{opacity:0;transform:translateY(-46%) scale(.97)}to{opacity:1;transform:translateY(-50%)}}" +
       ".aic-in{font-size:16px}" +
       ".aic-x{font-size:30px;line-height:1;padding:0 6px}" +
       "html.aic-open{overflow:hidden}" +
