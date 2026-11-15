@@ -24,7 +24,9 @@
     ".aic-head{background:" + color + ";color:#fff;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;align-items:center}" +
     ".aic-x{background:none;border:0;color:#fff;font-size:20px;cursor:pointer}" +
     ".aic-msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#f6f7f9}" +
-    ".aic-m{max-width:85%;padding:8px 11px;border-radius:12px;white-space:pre-wrap;word-wrap:break-word}" +
+    ".aic-m{max-width:85%;padding:8px 11px;border-radius:12px;word-wrap:break-word}" +
+    ".aic-m.user{white-space:pre-wrap}" +
+    ".aic-m p{margin:0 0 8px}.aic-m ul{margin:0 0 8px;padding-left:18px}.aic-m li{margin:2px 0}.aic-m>:last-child{margin-bottom:0}" +
     ".aic-m.bot{background:#fff;color:#111;align-self:flex-start;border:1px solid #e5e7eb}" +
     ".aic-m.user{background:" + color + ";color:#fff;align-self:flex-end}" +
     ".aic-form{display:flex;gap:6px;padding:10px;border-top:1px solid #e5e7eb;background:#fff}" +
@@ -55,6 +57,32 @@
   var input = box.querySelector(".aic-in");
   var history = [];
   var busy = false;
+
+
+  // Siguran prikaz odgovora: "- " redovi postaju lista, prazan red razdvaja pasuse.
+  // Sve ide preko textContent / createElement (nema innerHTML, nema XSS).
+  function render(el, text) {
+    el.textContent = "";
+    var lines = String(text).split("\n");
+    var para = null, list = null;
+    function flush() { para = null; list = null; }
+    lines.forEach(function (raw) {
+      var line = raw.trim();
+      if (!line) { flush(); return; }
+      var m = line.match(/^[-*\u2022]\s+(.*)$/);
+      if (m) {
+        if (!list) { list = document.createElement("ul"); el.appendChild(list); para = null; }
+        var li = document.createElement("li");
+        li.textContent = m[1];
+        list.appendChild(li);
+      } else {
+        if (!para) { para = document.createElement("p"); el.appendChild(para); list = null; }
+        else para.appendChild(document.createElement("br"));
+        para.appendChild(document.createTextNode(line));
+      }
+    });
+    if (!el.firstChild) el.textContent = String(text);
+  }
 
   function add(text, who) {
     var d = document.createElement("div");
@@ -92,7 +120,7 @@
       .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
       .then(function (res) {
         if (!res.ok || !res.d.reply) throw new Error("bad");
-        typing.textContent = res.d.reply;
+        render(typing, res.d.reply);
         history.push({ role: "user", content: text });
         history.push({ role: "assistant", content: res.d.reply });
       })
